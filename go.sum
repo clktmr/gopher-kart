@@ -1,0 +1,12 @@
+github.com/clktmr/n64 v0.0.0-20241113160339-71f5c9e65f2c h1:814eVcJIuw6Hmx0nUvZJFXznyZTwLkpwnHYmZ7DLZn4=
+github.com/clktmr/n64 v0.0.0-20241113160339-71f5c9e65f2c/go.mod h1:WZEm+7iYvDei+ie8OZFowNQg/bXX+tPtar1LIOq2yZI=
+github.com/clktmr/n64 v0.0.0-20241113161748-549ab7d64872 h1:5qXimxm5QxNwH9li6dUIkIvOTa0f+dHz5JpFbiiw0R8=
+github.com/clktmr/n64 v0.0.0-20241113161748-549ab7d64872/go.mod h1:WZEm+7iYvDei+ie8OZFowNQg/bXX+tPtar1LIOq2yZI=
+github.com/embeddedgo/display v1.1.0 h1:jXlY6/FeaUV89hX+ANGpTKogZWjhgno7vrCh86WA8aY=
+github.com/embeddedgo/display v1.1.0/go.mod h1:0sxxBoklqMbA1uBqEAg8Plntmwvt7cNsgxaf7UaS4yw=
+github.com/embeddedgo/fs v0.1.0 h1:M4bOltC28+cWixII514NKExkrRzBnjWLaRbTvZ87kIE=
+github.com/embeddedgo/fs v0.1.0/go.mod h1:0PeMg4i1WKpXdRqXEktx9o0Wd9EIzwWD4KTBbvAvZ3Q=
+github.com/sigurn/crc8 v0.0.0-20220107193325-2243fe600f9f h1:1R9KdKjCNSd7F8iGTxIpoID9prlYH8nuNYKt0XvweHA=
+github.com/sigurn/crc8 v0.0.0-20220107193325-2243fe600f9f/go.mod h1:vQhwQ4meQEDfahT5kd61wLAF5AAeh5ZPLVI4JJ/tYo8=
+golang.org/x/text v0.13.0 h1:ablQoSUd0tRdKxZewP80B+BaqeKJuVhuRxj/dkrun3k=
+golang.org/x/text v0.13.0/go.mod h1:TvPlkZtksWOMsz7fbANvkp4WM8x/WCo/om8BMLbz+aE=
