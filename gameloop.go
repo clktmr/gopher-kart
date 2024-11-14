@@ -40,8 +40,7 @@ var ClearColor = color.RGBA{0xb9, 0xff, 0xfd, 0xff}
 
 func (p *GameLoop) Run() {
 	gamepad := make(chan [4]controller.Controller)
-	now := rtos.Nanotime()
-	last := now
+	last := rtos.Nanotime()
 	go func() {
 		for {
 			controller.States.Poll()
@@ -64,7 +63,7 @@ func (p *GameLoop) Run() {
 		p.root.Update(now-last, input)
 		last = now
 
-		renderNodes := appendChildren(renderNodes[:0], p.root)
+		renderNodes = appendChildren(renderNodes[:0], p.root)
 
 		slices.SortFunc(renderNodes, func(a, b Renderer) int { return a.Z() - b.Z() })
 		for _, node := range renderNodes {
