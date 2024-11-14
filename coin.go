@@ -4,6 +4,7 @@ import (
 	_ "embed"
 	"image"
 	"image/png"
+	"math/rand"
 	"strings"
 	"time"
 
@@ -36,9 +37,11 @@ func init() {
 
 func NewCoin() *Coin {
 	tex := texture.NewNRGBA32FromImage(coinImg)
-	return &Coin{
+	coin := &Coin{
 		Sprite: *NewSprite(tex, 6, 1, 100*time.Millisecond),
 	}
+	coin.frame = rand.Intn(len(coin.frames))
+	return coin
 }
 
 func (p *Coin) Update(delta time.Duration, input [4]controller.Controller) {
