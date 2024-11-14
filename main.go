@@ -26,10 +26,8 @@ func init() {
 
 	// Redirect stdout and stderr either to cart's logger
 	if cart = carts.ProbeAll(); cart == nil {
-		panic("no logging peripheral found")
+		return
 	}
-
-	// rtos.SetSystemWriter(drivers.NewSystemWriter(cart))
 
 	devConsole := termfs.NewLight("termfs", nil, cart)
 	rtos.Mount(devConsole, "/dev/console")
