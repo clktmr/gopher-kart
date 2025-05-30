@@ -1,24 +1,21 @@
 package main
 
 import (
-	_ "embed"
-	"image"
+	"embed"
 	"image/png"
 	"math"
-	"strings"
 	"time"
 
+	"github.com/clktmr/n64/drivers/cartfs"
 	"github.com/clktmr/n64/drivers/controller"
 	"github.com/clktmr/n64/rcp/serial/joybus"
 	"github.com/clktmr/n64/rcp/texture"
 )
 
 var (
-	//go:embed assets/menu-animation.png
-	titlePng string
-
-	//go:embed assets/main-menu-buttons.png
-	pressStartPng string
+	//go:embed assets/menu-animation.png assets/main-menu-buttons.png
+	_menuPngs embed.FS
+	menuPngs  cartfs.FS = cartfs.Embed(_menuPngs)
 )
 
 type Title struct {
@@ -31,15 +28,15 @@ type Title struct {
 }
 
 func NewTitle(next Updater) *Title {
-	img, err := png.Decode(strings.NewReader(titlePng))
+	r, err := menuPngs.Open("assets/menu-animation.png")
 	if err != nil {
 		panic(err)
 	}
-	imgRGBA, ok := img.(*image.NRGBA)
-	if !ok {
-		panic("wrong image type")
+	img, err := png.Decode(r)
+	if err != nil {
+		panic(err)
 	}
-	tex := texture.NewTextureFromImage(imgRGBA)
+	tex := texture.NewTextureFromImage(img)
 	node := &Title{
 		Sprite: *NewSprite(tex, 1, 2, 100*time.Millisecond),
 		next:   next,
@@ -48,13 +45,13 @@ func NewTitle(next Updater) *Title {
 	node.relativePos.X += renderer.Bounds().Dx()/2 - node.Sprite.Size().X/2
 	node.relativePos.Y += renderer.Bounds().Dy()/2 - node.Sprite.Size().Y/2
 
-	img, err = png.Decode(strings.NewReader(pressStartPng))
+	r, err = menuPngs.Open("assets/main-menu-buttons.png")
 	if err != nil {
 		panic(err)
 	}
-	imgRGBA, ok = img.(*image.NRGBA)
-	if !ok {
-		panic("wrong image type")
+	img, err = png.Decode(r)
+	if err != nil {
+		panic(err)
 	}
 	tex = texture.NewTextureFromImage(img)
 	node.button = NewSprite(tex, 1, 2, 1*time.Second)

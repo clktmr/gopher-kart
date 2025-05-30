@@ -1,12 +1,12 @@
 package main
 
 import (
-	_ "embed"
+	"embed"
 	"image"
 	"image/png"
-	"strings"
 	"time"
 
+	"github.com/clktmr/n64/drivers/cartfs"
 	"github.com/clktmr/n64/drivers/controller"
 	"github.com/clktmr/n64/rcp/texture"
 )
@@ -14,14 +14,15 @@ import (
 type playerVariant string
 
 var (
-	//go:embed assets/burgundy-gopher.png
-	Burgundy playerVariant
+	//go:embed assets/*-gopher.png
+	_playerPngs embed.FS
+	playerPngs  cartfs.FS = cartfs.Embed(_playerPngs)
+)
 
-	//go:embed assets/beige-gopher.png
-	Beige playerVariant
-
-	//go:embed assets/black-gopher.png
-	Black playerVariant
+const (
+	Burgundy playerVariant = "burgundy"
+	Beige    playerVariant = "beige"
+	Black    playerVariant = "black"
 )
 
 type Player struct {
@@ -32,15 +33,15 @@ type Player struct {
 }
 
 func NewPlayer(v playerVariant, controller int) *Player {
-	img, err := png.Decode(strings.NewReader(string(v)))
+	r, err := playerPngs.Open("assets/" + string(v) + "-gopher.png")
 	if err != nil {
 		panic(err)
 	}
-	imgRGBA, ok := img.(*image.NRGBA)
-	if !ok {
-		panic("wrong image type")
+	img, err := png.Decode(r)
+	if err != nil {
+		panic(err)
 	}
-	tex := texture.NewTextureFromImage(imgRGBA)
+	tex := texture.NewTextureFromImage(img)
 	player := &Player{
 		Sprite:     *NewSprite(tex, 2, 1, 100*time.Millisecond),
 		controller: controller,

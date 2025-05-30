@@ -1,20 +1,21 @@
 package main
 
 import (
-	_ "embed"
+	"embed"
 	"image"
 	"image/draw"
 	"image/png"
 	"math/rand"
-	"strings"
 	"time"
 
+	"github.com/clktmr/n64/drivers/cartfs"
 	"github.com/clktmr/n64/drivers/controller"
 	"github.com/clktmr/n64/rcp/texture"
 )
 
 //go:embed assets/road-tile.png
-var roadPng string
+var _roadPng embed.FS
+var roadPng cartfs.FS = cartfs.Embed(_roadPng)
 
 type Road struct {
 	Sprite
@@ -23,15 +24,15 @@ type Road struct {
 }
 
 func NewRoad(children ...Updater) *Road {
-	img, err := png.Decode(strings.NewReader(roadPng))
+	r, err := roadPng.Open("assets/road-tile.png")
 	if err != nil {
 		panic(err)
 	}
-	imgRGBA, ok := img.(*image.NRGBA)
-	if !ok {
-		panic("wrong image type")
+	img, err := png.Decode(r)
+	if err != nil {
+		panic(err)
 	}
-	tex := texture.NewTextureFromImage(imgRGBA)
+	tex := texture.NewTextureFromImage(img)
 	road := &Road{
 		Sprite: *NewSprite(tex, 1, 1, 0),
 	}

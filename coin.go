@@ -1,20 +1,21 @@
 package main
 
 import (
-	_ "embed"
+	"embed"
 	"image"
 	"image/png"
 	"math/rand"
-	"strings"
 	"time"
 
+	"github.com/clktmr/n64/drivers/cartfs"
 	"github.com/clktmr/n64/drivers/controller"
 	"github.com/clktmr/n64/rcp/texture"
 )
 
 //go:embed assets/coin-shadow.png
-var coinPng string
-var coinImg *image.NRGBA
+var _coinPng embed.FS
+var coinPng cartfs.FS = cartfs.Embed(_coinPng)
+var coinImg image.Image
 
 type Coin struct {
 	Sprite
@@ -23,15 +24,13 @@ type Coin struct {
 }
 
 func init() {
-	img, err := png.Decode(strings.NewReader(coinPng))
+	r, err := coinPng.Open("assets/coin-shadow.png")
 	if err != nil {
 		panic(err)
 	}
-
-	var ok bool
-	coinImg, ok = img.(*image.NRGBA)
-	if !ok {
-		panic("wrong image type")
+	coinImg, err = png.Decode(r)
+	if err != nil {
+		panic(err)
 	}
 }
 

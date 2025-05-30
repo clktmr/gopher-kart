@@ -1,7 +1,6 @@
 package main
 
 import (
-	_ "embed"
 	"embedded/arch/r4000/systim"
 	"embedded/rtos"
 	"log"
