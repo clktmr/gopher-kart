@@ -40,7 +40,7 @@ func NewPlayer(v playerVariant, controller int) *Player {
 	if !ok {
 		panic("wrong image type")
 	}
-	tex := texture.NewNRGBA32FromImage(imgRGBA)
+	tex := texture.NewTextureFromImage(imgRGBA)
 	player := &Player{
 		Sprite:     *NewSprite(tex, 2, 1, 100*time.Millisecond),
 		controller: controller,

@@ -31,7 +31,7 @@ func NewRoad(children ...Updater) *Road {
 	if !ok {
 		panic("wrong image type")
 	}
-	tex := texture.NewNRGBA32FromImage(imgRGBA)
+	tex := texture.NewTextureFromImage(imgRGBA)
 	road := &Road{
 		Sprite: *NewSprite(tex, 1, 1, 0),
 	}

@@ -46,9 +46,10 @@ var players []*Player
 
 func main() {
 	video.SetupPAL(false, false)
-	resolution := video.NativeResolution().Div(2)
+	resolution := video.NativeResolution()
+	resolution.X /= 2
 	log.Println("Enabling video: ", resolution)
-	disp := display.NewDisplay(resolution, video.BPP16, &video.VBlank)
+	disp := display.NewDisplay(resolution, video.BPP16)
 
 	renderer = n64draw.NewRdp()
 	renderer.SetFramebuffer(disp.Swap())

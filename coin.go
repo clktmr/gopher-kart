@@ -36,7 +36,7 @@ func init() {
 }
 
 func NewCoin() *Coin {
-	tex := texture.NewNRGBA32FromImage(coinImg)
+	tex := texture.NewTextureFromImage(coinImg)
 	coin := &Coin{
 		Sprite: *NewSprite(tex, 6, 1, 100*time.Millisecond),
 	}

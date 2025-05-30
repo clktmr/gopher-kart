@@ -12,13 +12,13 @@ import (
 type Sprite struct {
 	Node
 
-	sheet          texture.Texture
+	sheet          *texture.Texture
 	frames         []image.Rectangle
 	frame          int
 	seek, duration time.Duration
 }
 
-func NewSprite(sheet texture.Texture, xCnt, yCnt int, duration time.Duration) *Sprite {
+func NewSprite(sheet *texture.Texture, xCnt, yCnt int, duration time.Duration) *Sprite {
 	bounds := sheet.Bounds()
 	size := image.Point{
 		bounds.Size().X / xCnt,

@@ -39,7 +39,7 @@ func NewTitle(next Updater) *Title {
 	if !ok {
 		panic("wrong image type")
 	}
-	tex := texture.NewNRGBA32FromImage(imgRGBA)
+	tex := texture.NewTextureFromImage(imgRGBA)
 	node := &Title{
 		Sprite: *NewSprite(tex, 1, 2, 100*time.Millisecond),
 		next:   next,
@@ -56,7 +56,7 @@ func NewTitle(next Updater) *Title {
 	if !ok {
 		panic("wrong image type")
 	}
-	tex = texture.NewNRGBA32FromImage(imgRGBA)
+	tex = texture.NewTextureFromImage(img)
 	node.button = NewSprite(tex, 1, 2, 1*time.Second)
 	node.button.relativePos.Y = node.Sprite.Size().Y + 5
 	node.button.relativePos.X += node.Sprite.Size().X/2 - node.button.Size().X/2

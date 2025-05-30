@@ -43,7 +43,7 @@ func (p *GameLoop) Run() {
 	last := rtos.Nanotime()
 	go func() {
 		for {
-			controller.States.Poll()
+			controller.Poll()
 			gamepad <- controller.States
 		}
 	}()

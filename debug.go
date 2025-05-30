@@ -38,9 +38,7 @@ func NewDebug(disp *display.Display) *Debug {
 	return dbg
 }
 
-var gomono = gomono12.NewFace(
-	gomono12.X0000_00ff(),
-)
+var gomono = gomono12.NewFace()
 
 func (p *Debug) Update(delta time.Duration, input [4]controller.Controller) {
 	p.Node.Update(delta, input)
@@ -61,7 +59,7 @@ func (p *Debug) Render() {
 		p.stats = append(p.stats, []byte("\nAlloc: ")...)
 		p.stats = strconv.AppendUint(p.stats, p.alloc, 10)
 
-		renderer.DrawText(bounds, gomono, bounds.Min, color.RGBA{0x0, 0x0, 0x0, 0xff}, p.stats)
+		renderer.DrawText(bounds, gomono, bounds.Min, color.RGBA{A: 0xff}, nil, p.stats)
 	}
 }
 

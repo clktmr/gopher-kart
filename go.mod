@@ -3,7 +3,7 @@ module github.com/clktmr/gopher-kart
 go 1.22
 
 require (
-	github.com/clktmr/n64 v0.0.0-20241113161748-549ab7d64872
+	github.com/clktmr/n64 v0.0.0-20250530023731-e32d75ac592b
 	github.com/embeddedgo/fs v0.1.0
 )
 
