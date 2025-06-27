@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"image"
+	"image/draw"
 	"image/png"
 	"math/rand"
 	"time"
@@ -49,7 +50,7 @@ func (p *Coin) Update(delta time.Duration, input [4]controller.Controller) {
 	frame := p.frames[p.frame]
 	r := image.Rectangle{Max: frame.Size()}.Add(p.globalPos)
 
-	if !r.Overlaps(renderer.Bounds()) {
+	if r.Max.X < 0 {
 		p.hidden = true
 	}
 	for _, player := range players {
@@ -59,8 +60,8 @@ func (p *Coin) Update(delta time.Duration, input [4]controller.Controller) {
 	}
 }
 
-func (p *Coin) Render() {
+func (p *Coin) Render(dst draw.Image) {
 	if !p.hidden {
-		p.Sprite.Render()
+		p.Sprite.Render(dst)
 	}
 }

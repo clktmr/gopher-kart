@@ -3,13 +3,13 @@ package main
 import (
 	"embedded/arch/r4000/systim"
 	"embedded/rtos"
+	"image"
 	"log"
 	"os"
 	"syscall"
 
 	"github.com/clktmr/n64/drivers/carts"
 	"github.com/clktmr/n64/drivers/display"
-	n64draw "github.com/clktmr/n64/drivers/draw"
 	_ "github.com/clktmr/n64/machine"
 	"github.com/clktmr/n64/rcp/cpu"
 	"github.com/clktmr/n64/rcp/video"
@@ -40,18 +40,17 @@ func init() {
 	log.SetFlags(log.Lmicroseconds | log.Lshortfile)
 }
 
-var renderer *n64draw.Rdp
 var players []*Player
 
+var worldbounds image.Rectangle
+
 func main() {
-	video.SetupPAL(false, false)
+	video.Setup(false)
 	resolution := video.NativeResolution()
 	resolution.X /= 2
 	log.Println("Enabling video: ", resolution)
 	disp := display.NewDisplay(resolution, video.BPP16)
-
-	renderer = n64draw.NewRdp()
-	renderer.SetFramebuffer(disp.Swap())
+	worldbounds = disp.Swap().Bounds()
 
 	players = []*Player{
 		NewPlayer(Burgundy, 0),
@@ -69,7 +68,7 @@ func main() {
 		NewTitle(game),
 	)
 
-	gameloop := NewGameLoop(disp, renderer, root)
+	gameloop := NewGameLoop(disp, root)
 
 	log.Println("Starting gameloop")
 	gameloop.Run()

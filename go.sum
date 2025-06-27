@@ -1,5 +1,5 @@
-github.com/clktmr/n64 v0.0.0-20250530023731-e32d75ac592b h1:Qwz/R0cuQ0Sj8iru5GftfvTcI8+ymvMPgfPaFnSEyhU=
-github.com/clktmr/n64 v0.0.0-20250530023731-e32d75ac592b/go.mod h1:h831APx0M0qGmtBNQclvE8MODswnEQEOFZAjFq4dQOE=
+github.com/clktmr/n64 v0.1.1-0.20250627103352-552014d8d838 h1:H2Ox0d18vhYQKnQ0MQ5g2otZbI5pvghJ8N4xLQ3zyVM=
+github.com/clktmr/n64 v0.1.1-0.20250627103352-552014d8d838/go.mod h1:fFicOy5F8/FZRUXqsQ5jyiYfeSmsqua2LNWDLheVPmw=
 github.com/embeddedgo/display v1.1.0 h1:jXlY6/FeaUV89hX+ANGpTKogZWjhgno7vrCh86WA8aY=
 github.com/embeddedgo/display v1.1.0/go.mod h1:0sxxBoklqMbA1uBqEAg8Plntmwvt7cNsgxaf7UaS4yw=
 github.com/embeddedgo/fs v0.1.0 h1:M4bOltC28+cWixII514NKExkrRzBnjWLaRbTvZ87kIE=

@@ -42,8 +42,8 @@ func NewTitle(next Updater) *Title {
 		next:   next,
 	}
 
-	node.relativePos.X += renderer.Bounds().Dx()/2 - node.Sprite.Size().X/2
-	node.relativePos.Y += renderer.Bounds().Dy()/2 - node.Sprite.Size().Y/2
+	node.relativePos.X += worldbounds.Dx()/2 - node.Sprite.Size().X/2
+	node.relativePos.Y += worldbounds.Dy()/2 - node.Sprite.Size().Y/2
 
 	r, err = menuPngs.Open("assets/main-menu-buttons.png")
 	if err != nil {

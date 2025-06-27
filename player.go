@@ -3,6 +3,7 @@ package main
 import (
 	"embed"
 	"image"
+	"image/draw"
 	"image/png"
 	"time"
 
@@ -46,7 +47,7 @@ func NewPlayer(v playerVariant, controller int) *Player {
 		Sprite:     *NewSprite(tex, 2, 1, 100*time.Millisecond),
 		controller: controller,
 	}
-	player.relativePos.Y += renderer.Bounds().Dy() / 2
+	player.relativePos.Y += worldbounds.Dy() / 2
 	return player
 }
 
@@ -62,9 +63,9 @@ func (p *Player) Update(delta time.Duration, input [4]controller.Controller) {
 	p.hidden = !input[p.controller].Present()
 }
 
-func (p *Player) Render() {
+func (p *Player) Render(dst draw.Image) {
 	if p.hidden {
 		return
 	}
-	p.Sprite.Render()
+	p.Sprite.Render(dst)
 }

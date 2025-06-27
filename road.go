@@ -10,6 +10,7 @@ import (
 
 	"github.com/clktmr/n64/drivers/cartfs"
 	"github.com/clktmr/n64/drivers/controller"
+	n64draw "github.com/clktmr/n64/drivers/draw"
 	"github.com/clktmr/n64/rcp/texture"
 )
 
@@ -36,7 +37,7 @@ func NewRoad(children ...Updater) *Road {
 	road := &Road{
 		Sprite: *NewSprite(tex, 1, 1, 0),
 	}
-	road.relativePos.Y += renderer.Bounds().Dy() - road.frames[0].Dy()
+	road.relativePos.Y += worldbounds.Dy() - road.frames[0].Dy()
 
 	for range 5 {
 		road.AddChild(NewCoin())
@@ -51,7 +52,7 @@ func (p *Road) Update(delta time.Duration, input [4]controller.Controller) {
 	if p.coinTimer >= 250*time.Millisecond {
 		p.coinTimer = 0
 		if coin := p.getFreeCoin(); coin != nil {
-			coin.relativePos.X = -p.globalPos.X + renderer.Bounds().Dx() - 1
+			coin.relativePos.X = -p.globalPos.X + worldbounds.Dx() - 1
 			coin.relativePos.Y = rand.Intn(159) + 34 - coin.Size().Y
 			coin.hidden = false
 		}
@@ -70,14 +71,14 @@ func (p *Road) getFreeCoin() *Coin {
 	return nil
 }
 
-func (p *Road) Render() {
+func (p *Road) Render(dst draw.Image) {
 	frame := p.frames[p.frame]
 	r := image.Rectangle{Max: frame.Size()}
 	r = r.Add(image.Point{p.globalPos.X % frame.Dx(), p.globalPos.Y})
 	for {
-		renderer.Draw(r, p.sheet, frame.Bounds().Min, draw.Src)
+		n64draw.Draw(dst, r, p.sheet, frame.Bounds().Min, draw.Src)
 		r = r.Add(image.Point{r.Dx(), 0})
-		if !r.Overlaps(renderer.Bounds()) {
+		if !r.Overlaps(dst.Bounds()) {
 			break
 		}
 	}

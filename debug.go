@@ -2,12 +2,14 @@ package main
 
 import (
 	"image/color"
+	"image/draw"
 	"runtime"
 	"strconv"
 	"time"
 
 	"github.com/clktmr/n64/drivers/controller"
 	"github.com/clktmr/n64/drivers/display"
+	n64draw "github.com/clktmr/n64/drivers/draw"
 	"github.com/clktmr/n64/fonts/gomono12"
 	"github.com/clktmr/n64/rcp/serial/joybus"
 )
@@ -48,8 +50,8 @@ func (p *Debug) Update(delta time.Duration, input [4]controller.Controller) {
 	}
 }
 
-func (p *Debug) Render() {
-	bounds := renderer.Bounds().Inset(renderer.Bounds().Dy() / 10)
+func (p *Debug) Render(dst draw.Image) {
+	bounds := dst.Bounds().Inset(dst.Bounds().Dy() / 10)
 	if !p.hidden {
 		p.stats = p.stats[:0]
 		p.stats = append(p.stats, []byte("Draw:  ")...)
@@ -59,7 +61,7 @@ func (p *Debug) Render() {
 		p.stats = append(p.stats, []byte("\nAlloc: ")...)
 		p.stats = strconv.AppendUint(p.stats, p.alloc, 10)
 
-		renderer.DrawText(bounds, gomono, bounds.Min, color.RGBA{A: 0xff}, nil, p.stats)
+		n64draw.DrawText(dst, bounds, gomono, bounds.Min, color.RGBA{A: 0xff}, nil, p.stats)
 	}
 }
 

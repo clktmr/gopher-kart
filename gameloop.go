@@ -22,18 +22,17 @@ type Updater interface {
 }
 
 type Renderer interface {
-	Render()
+	Render(dst draw.Image)
 	Z() int
 }
 
 type GameLoop struct {
-	root     Updater
-	renderer *n64draw.Rdp
-	display  *display.Display
+	root    Updater
+	display *display.Display
 }
 
-func NewGameLoop(disp *display.Display, renderer *n64draw.Rdp, root Updater) *GameLoop {
-	return &GameLoop{root, renderer, disp}
+func NewGameLoop(disp *display.Display, root Updater) *GameLoop {
+	return &GameLoop{root, disp}
 }
 
 var ClearColor = color.RGBA{0xb9, 0xff, 0xfd, 0xff}
@@ -42,9 +41,10 @@ func (p *GameLoop) Run() {
 	gamepad := make(chan [4]controller.Controller)
 	last := rtos.Nanotime()
 	go func() {
+		inputs := [4]controller.Controller{}
 		for {
-			controller.Poll()
-			gamepad <- controller.States
+			controller.Poll(&inputs)
+			gamepad <- inputs
 		}
 	}()
 	clearImg := image.Uniform{ClearColor}
@@ -56,9 +56,8 @@ func (p *GameLoop) Run() {
 		// setup next frame
 		now := rtos.Nanotime()
 		input := <-gamepad
-		p.renderer.SetFramebuffer(write)
 
-		p.renderer.Draw(p.renderer.Bounds(), &clearImg, image.Point{}, draw.Src)
+		n64draw.Src.Draw(write, write.Bounds(), &clearImg, image.Point{})
 
 		p.root.Update(now-last, input)
 		last = now
@@ -67,10 +66,10 @@ func (p *GameLoop) Run() {
 
 		slices.SortFunc(renderNodes, func(a, b Renderer) int { return a.Z() - b.Z() })
 		for _, node := range renderNodes {
-			node.Render()
+			node.Render(write)
 		}
 
-		p.renderer.Flush()
+		n64draw.Flush()
 	}
 }
 

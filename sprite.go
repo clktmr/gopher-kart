@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/clktmr/n64/drivers/controller"
+	n64draw "github.com/clktmr/n64/drivers/draw"
 	"github.com/clktmr/n64/rcp/texture"
 )
 
@@ -60,10 +61,10 @@ func (p *Sprite) Update(delta time.Duration, input [4]controller.Controller) {
 	}
 }
 
-func (p *Sprite) Render() {
+func (p *Sprite) Render(dst draw.Image) {
 	frame := p.frames[p.frame]
 	r := p.Bounds()
-	renderer.Draw(r, p.sheet, frame.Min, draw.Over)
+	n64draw.Over.Draw(dst, r, p.sheet, frame.Min)
 }
 
 func (p *Sprite) Z() int {
