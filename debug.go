@@ -52,6 +52,8 @@ func (p *Debug) Update(delta time.Duration, input [4]controller.Controller) {
 
 func (p *Debug) Render(dst draw.Image) {
 	bounds := dst.Bounds().Inset(dst.Bounds().Dy() / 10)
+	pt := bounds.Min
+	pt.Y += int(gomono.Ascent)
 	if !p.hidden {
 		p.stats = p.stats[:0]
 		p.stats = append(p.stats, []byte("Draw:  ")...)
@@ -61,7 +63,7 @@ func (p *Debug) Render(dst draw.Image) {
 		p.stats = append(p.stats, []byte("\nAlloc: ")...)
 		p.stats = strconv.AppendUint(p.stats, p.alloc, 10)
 
-		n64draw.DrawText(dst, bounds, gomono, bounds.Min, color.RGBA{A: 0xff}, nil, p.stats)
+		n64draw.DrawText(dst, bounds, gomono, pt, color.RGBA{A: 0xff}, nil, p.stats)
 	}
 }
 
