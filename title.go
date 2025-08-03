@@ -3,20 +3,25 @@ package main
 import (
 	"embed"
 	"image/png"
+	"io"
 	"math"
 	"time"
 
 	"github.com/clktmr/n64/drivers/cartfs"
 	"github.com/clktmr/n64/drivers/controller"
+	"github.com/clktmr/n64/drivers/rspq/mixer"
 	"github.com/clktmr/n64/rcp/serial/joybus"
 	"github.com/clktmr/n64/rcp/texture"
 )
 
 var (
 	//go:embed assets/menu-animation.png assets/main-menu-buttons.png
+	//go:embed "assets/8bit Bossa.pcm_s16be"
 	_menuPngs embed.FS
-	menuPngs  cartfs.FS = cartfs.Embed(_menuPngs)
+	menuFiles cartfs.FS = cartfs.Embed(_menuPngs)
 )
+
+var menuMusic *mixer.Source
 
 type Title struct {
 	Sprite
@@ -28,7 +33,7 @@ type Title struct {
 }
 
 func NewTitle(next Updater) *Title {
-	r, err := menuPngs.Open("assets/menu-animation.png")
+	r, err := menuFiles.Open("assets/menu-animation.png")
 	if err != nil {
 		panic(err)
 	}
@@ -45,7 +50,7 @@ func NewTitle(next Updater) *Title {
 	node.relativePos.X += worldbounds.Dx()/2 - node.Sprite.Size().X/2
 	node.relativePos.Y += worldbounds.Dy()/2 - node.Sprite.Size().Y/2
 
-	r, err = menuPngs.Open("assets/main-menu-buttons.png")
+	r, err = menuFiles.Open("assets/main-menu-buttons.png")
 	if err != nil {
 		panic(err)
 	}
@@ -58,6 +63,14 @@ func NewTitle(next Updater) *Title {
 	node.button.relativePos.Y = node.Sprite.Size().Y + 5
 	node.button.relativePos.X += node.Sprite.Size().X/2 - node.button.Size().X/2
 	node.AddChild(node.button)
+
+	r, err = menuFiles.Open("assets/8bit Bossa.pcm_s16be")
+	if err != nil {
+		panic(err)
+	}
+	menuMusic = mixer.NewSource(mixer.Loop(r.(io.ReadSeeker)), 8000)
+	mixer.SetSource(0, menuMusic)
+
 	return node
 }
 

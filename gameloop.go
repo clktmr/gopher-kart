@@ -5,12 +5,15 @@ import (
 	"image"
 	"image/color"
 	"image/draw"
+	"io"
 	"slices"
 	"time"
 
 	"github.com/clktmr/n64/drivers/controller"
 	"github.com/clktmr/n64/drivers/display"
 	n64draw "github.com/clktmr/n64/drivers/draw"
+	"github.com/clktmr/n64/drivers/rspq/mixer"
+	"github.com/clktmr/n64/rcp/audio"
 )
 
 type Updater interface {
@@ -47,6 +50,7 @@ func (p *GameLoop) Run() {
 			gamepad <- inputs
 		}
 	}()
+	go func() { io.Copy(audio.Buffer, mixer.Output) }()
 	clearImg := image.Uniform{ClearColor}
 	renderNodes := make([]Renderer, 0, 64)
 	for {

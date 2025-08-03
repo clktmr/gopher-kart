@@ -39,8 +39,8 @@ func NewRoad(children ...Updater) *Road {
 	}
 	road.relativePos.Y += worldbounds.Dy() - road.frames[0].Dy()
 
-	for range 5 {
-		road.AddChild(NewCoin())
+	for i := range 5 {
+		road.AddChild(NewCoin(i + 1))
 	}
 	return road
 }

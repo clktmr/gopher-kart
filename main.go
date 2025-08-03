@@ -10,7 +10,9 @@ import (
 
 	"github.com/clktmr/n64/drivers/carts"
 	"github.com/clktmr/n64/drivers/display"
+	"github.com/clktmr/n64/drivers/rspq/mixer"
 	_ "github.com/clktmr/n64/machine"
+	"github.com/clktmr/n64/rcp/audio"
 	"github.com/clktmr/n64/rcp/cpu"
 	"github.com/clktmr/n64/rcp/video"
 
@@ -48,9 +50,14 @@ func main() {
 	video.Setup(false)
 	resolution := video.NativeResolution()
 	resolution.X /= 2
-	log.Println("Enabling video: ", resolution)
+	log.Println("Enabling video:", resolution)
 	disp := display.NewDisplay(resolution, video.BPP16)
 	worldbounds = disp.Swap().Bounds()
+
+	sampleRate := 48000
+	log.Println("Enabling audio:", sampleRate, "Hz")
+	audio.Start(sampleRate)
+	mixer.Init()
 
 	players = []*Player{
 		NewPlayer(Burgundy, 0),

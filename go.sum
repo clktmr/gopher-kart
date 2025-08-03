@@ -1,10 +1,12 @@
-github.com/clktmr/n64 v0.1.1-0.20250627103352-552014d8d838 h1:H2Ox0d18vhYQKnQ0MQ5g2otZbI5pvghJ8N4xLQ3zyVM=
-github.com/clktmr/n64 v0.1.1-0.20250627103352-552014d8d838/go.mod h1:fFicOy5F8/FZRUXqsQ5jyiYfeSmsqua2LNWDLheVPmw=
+github.com/clktmr/n64 v0.1.2-0.20250803110307-5b56b783fa15 h1:wny6iYXDJ/Zgdhb5yVeA7jvKzgu57YtwxLhOWMCOZqg=
+github.com/clktmr/n64 v0.1.2-0.20250803110307-5b56b783fa15/go.mod h1:RjOEn0dSAje8DJLBEDtU2q74Z4GN0XJPtf0eIEd66u8=
 github.com/embeddedgo/display v1.1.0 h1:jXlY6/FeaUV89hX+ANGpTKogZWjhgno7vrCh86WA8aY=
 github.com/embeddedgo/display v1.1.0/go.mod h1:0sxxBoklqMbA1uBqEAg8Plntmwvt7cNsgxaf7UaS4yw=
 github.com/embeddedgo/fs v0.1.0 h1:M4bOltC28+cWixII514NKExkrRzBnjWLaRbTvZ87kIE=
 github.com/embeddedgo/fs v0.1.0/go.mod h1:0PeMg4i1WKpXdRqXEktx9o0Wd9EIzwWD4KTBbvAvZ3Q=
 github.com/sigurn/crc8 v0.0.0-20220107193325-2243fe600f9f h1:1R9KdKjCNSd7F8iGTxIpoID9prlYH8nuNYKt0XvweHA=
 github.com/sigurn/crc8 v0.0.0-20220107193325-2243fe600f9f/go.mod h1:vQhwQ4meQEDfahT5kd61wLAF5AAeh5ZPLVI4JJ/tYo8=
-golang.org/x/text v0.13.0 h1:ablQoSUd0tRdKxZewP80B+BaqeKJuVhuRxj/dkrun3k=
-golang.org/x/text v0.13.0/go.mod h1:TvPlkZtksWOMsz7fbANvkp4WM8x/WCo/om8BMLbz+aE=
+golang.org/x/exp v0.0.0-20250620022241-b7579e27df2b h1:M2rDM6z3Fhozi9O7NWsxAkg/yqS/lQJ6PmkyIV3YP+o=
+golang.org/x/exp v0.0.0-20250620022241-b7579e27df2b/go.mod h1:3//PLf8L/X+8b4vuAfHzxeRUl04Adcb341+IGKfnqS8=
+golang.org/x/text v0.14.0 h1:ScX5w1eTa3QqT8oi6+ziP7dTV1S2+ALU0bI+0zXKWiQ=
+golang.org/x/text v0.14.0/go.mod h1:18ZOQIKpY8NJVqYksKHtTdi31H5itFRjB5/qKTNYzSU=
